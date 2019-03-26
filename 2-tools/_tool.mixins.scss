@@ -1,0 +1,113 @@
+@mixin spring-width($width) {
+    width: 100%;
+    max-width: $width;
+}
+
+@mixin spring-height($height) {
+    height: 100%;
+    max-height: $height;
+}
+
+@mixin suction-height($height) {
+    height: auto;
+    min-height: $height;
+}
+
+%bem-block {
+    font-size: 10px
+}
+
+@mixin block-scale($value: 1) {
+    $value: $value * 10;
+    font-size: #{$value}px;
+}
+
+@mixin img-object($fit) {
+    width: 100%;
+    height: 100%;
+    object-fit: $fit;
+}
+
+@mixin background-object($mode: standard) {
+    @if $mode == standard {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
+
+@mixin fluid-box($height) {
+    height: auto;
+    padding-bottom: $height;
+}
+
+@mixin size($width, $height:$width) {
+    width: $width;
+    height: $height;
+}
+
+@mixin absolute($quadrant, $x:center, $y:center) {
+    position: absolute;
+    @if $quadrant == center {
+        $quadrant: 2;
+        $x: center;
+        $y: center;
+    }
+    @if $quadrant == 1 {
+        @if $x == center {
+            right: 50%;
+            transform: translateX(-50%);
+        } @else {
+            right: $x;
+        }
+        @if $y == center {
+            top: 50%;
+            transform: translateY(-50%);
+        } @else {
+            top: $y;
+        }
+    }
+    @if $quadrant == 2 {
+        @if $x == center {
+            left: 50%;
+            transform: translateX(-50%);
+        } @else {
+            left: $x;
+        }
+        @if $y == center {
+            top: 50%;
+            transform: translateY(-50%);
+        } @else {
+            top: $y;
+        }
+    }
+    @if $quadrant == 3 {
+        @if $x == center {
+            left: 50%;
+            transform: translateX(-50%);
+        } @else {
+            left: $x;
+        }
+        @if $y == center {
+            bottom: 50%;
+            transform: translateY(-50%);
+        } @else {
+            bottom: $y;
+        }
+    }
+    @if $quadrant == 4 {
+        @if $x == center {
+            right: 50%;
+            transform: translateX(-50%);
+        } @else {
+            right: $x;
+        }
+        @if $y == center {
+            bottom: 50%;
+            transform: translateY(-50%);
+        } @else {
+            bottom: $y;
+        }
+    }
+}

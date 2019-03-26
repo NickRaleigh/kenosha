@@ -1,0 +1,35 @@
+
+/* ------------------------------------------------------------ *\
+Variables
+\* ------------------------------------------------------------ */
+
+//Colors
+$red:       #CE0E2D;
+$red-2:     #aa1e2b;
+$beige:     #DFDDD0;
+$cool-grey: #5B6670;
+$dark-grey: #404f57;
+$blue:      #579ed6;
+$egg-1:     #E4E9E6;
+$egg-2:     #F7F5F2;
+$white:     #FFFFFF;
+$black:     #000000;
+$pale:      #f7f5f2;
+
+// Fonts
+$display-type: 'Merriweather', serif;
+$body-type: 'Open Sans', sans-serif;
+$script: 'Caveat', cursive;
+
+// Include Media Settings
+$breakpoints: (
+  'phone': 320px,
+  'phone-size-lg': 550px,
+  'tablet': 768px,
+  'desktop': 1024px,
+  'desktop-size-lg': 1250px,
+  'desktop-size-xl': 1560px
+) !default;
+
+// Directories
+$images: '../../images';
