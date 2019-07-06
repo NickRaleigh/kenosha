@@ -1,3 +1,8 @@
+@function detect-children($input) {
+  $layout: str-replace($input, '@', '&__');
+  @return $input;
+}
+
 @mixin perch($expression, $blocks:null, $gap:0, $y-gap:null) {
   $flex-direction: false;
   $flex-wrap: false;
@@ -13,7 +18,7 @@
     @if (str-index($name, '-')) {
       $flex-direction: row;
     }
-    @else if (str-index($name, '=')) {
+    @elseif (str-index($name, '=')) {
       $flex-direction: column;
       -webkit-box-orient: vertical;
       -webkit-box-direction: normal;
@@ -209,11 +214,15 @@
                 }
               }
           }
-          @if ($y-gap and type-of ($y-gap) == string and str-index($y-gap, '~') ) {
-            @if $y-gap != null {
-              $y-gap: unquote(str-replace($y-gap, '~', ''));
-              #{$blockSelector}~#{$blockSelector} {
-                margin-top: $y-gap;
+          @if ($y-gap) {
+            @if (type-of($y-gap) == string) {
+              @if $y-gap != null {
+                @if str-index($y-gap, '~') {
+                  $y-gap: unquote(str-replace($y-gap, '~', ''));
+                  #{$blockSelector}~#{$blockSelector} {
+                    margin-top: $y-gap;
+                  }
+                }
               }
             }
           }
@@ -367,3 +376,4 @@
     }
 
 }
+
