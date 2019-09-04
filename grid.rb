@@ -39,44 +39,51 @@ def parse_sass_settings(settings)
     settings.each do |setting|
       parse_to_sass(setting)
     end
-  else
-    parse_to_sass(settings)
   end
 end
 
 def parse_to_sass(setting)
-  columns = ''
-  layout = ''
-  gaps = []
-  breakpoint = ''
+  if setting =~ /\d/         
+    columns = ''
+    layout = ''
+    gaps = []
+    breakpoint = ''
 
-  columns = setting.scan(/o-columns--([0-9]+)-/)[0][0]
+    columns = setting.scan(/o-columns--([0-9]+)-/)[0][0]
 
-  #parse the rest of the settings
-  remaining = setting.gsub(/o-columns--([0-9]+)-/, '')
-  remaining = remaining.gsub(')(', ' ')
-  remaining = remaining.gsub('(', '')
-  remaining = remaining.gsub(')', '')
-  remaining = remaining.split
+    #parse the rest of the settings
+    remaining = setting.gsub(/o-columns--([0-9]+)-/, '')
+    remaining = remaining.gsub(')(', ' ')
+    remaining = remaining.gsub('(', '')
+    remaining = remaining.gsub(')', '')
+    remaining = remaining.split
 
-  #layout
-  layout = remaining[0]
+    #layout
+    layout = remaining[0]
 
-  #gaps
-  spacingGaps = remaining[1]
-  if spacingGaps.include?(',')
-    gaps = spacingGaps.split(',')
-  else 
-    gaps[0] = spacingGaps
-    gaps[1] = spacingGaps
+    #gaps
+    spacingGaps = remaining[1]
+    if spacingGaps.include?(',')
+      gaps = spacingGaps.split(',')
+    else 
+      gaps[0] = spacingGaps
+      gaps[1] = spacingGaps
+    end
+
+    #breakpoint
+    if remaining.length == 3
+      breakpoint = remaining[2]
+    end
+
+    write_settings(columns,layout,gaps,breakpoint)
+  else
+    remaining = setting.gsub('o-columns--(', '').gsub(' ', '').gsub(')(', ' ').gsub(')', '').split(' ')
+    if remaining.length == 2
+      breakpoint = remaining[1]
+    end
+    layout = remaining[0]
+    write_settings(0, layout, ['0','0'], breakpoint)
   end
-
-  #breakpoint
-  if remaining.length == 3
-    breakpoint = remaining[2]
-  end
-
-  write_settings(columns,layout,gaps,breakpoint)
 end
 
 def write_settings(columns,layout,gaps,breakpoint)
@@ -99,11 +106,11 @@ def write_settings(columns,layout,gaps,breakpoint)
   end
 
 
-    end
+end
 
-    def app
-      settings = app_settings
-      read_templates(settings['templates'])
-    end
+def app
+  settings = app_settings
+  read_templates(settings['templates'])
+end
 
-    app
+app

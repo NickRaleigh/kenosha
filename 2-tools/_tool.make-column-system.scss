@@ -11,22 +11,40 @@
     $xyGapLayout: '(' + $xGap + $yGapLayout + ')';
   }
 
+
   // breakpoints [<=tablet]
   $breakpointLayout: '';
   @if ($breakpoint != '') {
     $breakpointLayout: '(' + $breakpoint + ')';
   }
 
-  @if ($breakpoint != '') {
-    @include media($breakpoint) {
-      [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}#{$breakpointLayout}"] {
-        @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
+    @if ($columns == 0) {
+      @if ($breakpoint != '') {
+        [class~="o-columns--(#{$layout})#{$breakpointLayout}"] {
+          @include media($breakpoint) {
+            @include perch('#{$layout}');
+          }
+        }
+      }
+      @else {
+        [class~="o-columns--(#{$layout})#{$breakpointLayout}"] {
+          @include perch('#{$layout}');
+        }
+      } 
+    }
+
+    @else {
+      @if ($breakpoint != '') {
+        @include media($breakpoint) {
+          [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}#{$breakpointLayout}"] {
+            @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
+          }
+        }
+      } 
+      @else {
+        [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}"] {
+          @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
+        }
       }
     }
-  } 
-  @else {
-    [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}"] {
-      @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
-    }
   }
-}
