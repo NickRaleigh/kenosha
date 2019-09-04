@@ -1,5 +1,4 @@
 require 'fileutils'
-require 'pry'
 
 def app_settings
   settings = {

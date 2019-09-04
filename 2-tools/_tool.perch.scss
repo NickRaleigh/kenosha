@@ -1,8 +1,3 @@
-@function detect-children($input) {
-  $layout: str-replace($input, '@', '&__');
-  @return $input;
-}
-
 @mixin perch($expression, $blocks:null, $gap:0, $y-gap:null) {
   $flex-direction: false;
   $flex-wrap: false;
@@ -18,15 +13,11 @@
     @if (str-index($name, '-')) {
       $flex-direction: row;
     }
-    @elseif (str-index($name, '=')) {
+    @else if (str-index($name, '=')) {
       $flex-direction: column;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
     }
     @else {
       $flex-direction: row;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
     }
   }
 
@@ -100,34 +91,34 @@
     @if ($first-char != '-' and $third-char == '-') {
       $justify-content: flex-start;
     }
-    @elseif ($second-char != '-' and $fourth-char == '') {
+    @else if ($second-char != '-' and $fourth-char == '') {
       $justify-content: center;
     }
-    @elseif ($first-char == '-' and $third-char != '-') {
+    @else if ($first-char == '-' and $third-char != '-') {
       $justify-content: flex-end;
     }
-    @elseif ($first-char != '-' and $third-char != '-' and $fourth-char != '-') {
+    @else if ($first-char != '-' and $third-char != '-' and $fourth-char != '-') {
       $justify-content: space-between;
     }
-    @elseif ($first-char != '-' and $third-char != '-' and $fourth-char =='-') {
+    @else if ($first-char != '-' and $third-char != '-' and $fourth-char =='-') {
       $justify-content: space-around;
     }
   }
 
-  @elseif ($flex-direction == column or $flex-direction == column-reverse) {
+  @else if ($flex-direction == column or $flex-direction == column-reverse) {
     @if ($first-char != '=' and $third-char == '=') {
       $justify-content: flex-start;
     }
-    @elseif ($second-char != '=' and $fourth-char == '') {
+    @else if ($second-char != '=' and $fourth-char == '') {
       $justify-content: center;
     }
-    @elseif ($first-char == '=' and $third-char != '=') {
+    @else if ($first-char == '=' and $third-char != '=') {
       $justify-content: flex-end;
     }
-    @elseif ($first-char != '=' and $third-char != '=' and $fourth-char != '=') {
+    @else if ($first-char != '=' and $third-char != '=' and $fourth-char != '=') {
       $justify-content: space-between;
     }
-    @elseif ($first-char != '=' and $third-char != '=' and $fourth-char =='=') {
+    @else if ($first-char != '=' and $third-char != '=' and $fourth-char =='=') {
       $justify-content: space-around;
     }
   }
@@ -169,16 +160,17 @@
             }
           }
         } 
-        @elseif  (type-of($blocks) == map) {
+        @else if  (type-of($blocks) == map) {
           $blockSelector: '';
           $blockTotal: 0;
           @each $key, $value in $blocks {
             $blockTotal: $blockTotal + $value;
           }
           @each $key, $value in $blocks {
-            @if (str-index($key, '@')) {
+            @if (str-index($key, '@') and str-index($key, '@@') != false) {
               $blockSelector: str-replace($key, '@', '&__');
-            } @else {
+            } 
+            @else {
               $blockSelector: $key;
             }
             $fluid-flex-basis: false;
@@ -228,7 +220,7 @@
           }
         }
       }
-        @elseif  (type-of($blocks) == map and $flex-wrap == false) {
+        @else if  (type-of($blocks) == map and $flex-wrap == false) {
         }
         @else {
           $column-gap: $gap;
@@ -247,7 +239,7 @@
                 $edges: append($edges, $index);
                 $edge-count: 0;
               }
-              @elseif ($edge-count + $block > 100%) {
+              @else if ($edge-count + $block > 100%) {
                 $previous: $index - 1;
                 $edges: append($edges, $previous);
                 $edge-count: $block;
@@ -331,24 +323,10 @@
               }
             }
           }
-
-          // $index: 1;
-
-          // @each $block in $blocks {
-          //   & > * {
-          //     &:nth-child(#{$index}n) {
-          //       flex-basis: $block;
-          //       width: 100%;
-          //     }
-          //   }
-          //   $index: $index + 1;
-          // }
         }
     }
 
     // render
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
 
     @if ($flex-direction and $flex-wrap) {
@@ -356,23 +334,15 @@
     }
       
     @if ($justify-content) {
-      -webkit-justify-content: $justify-content;
-      -ms-flex-pack: $justify-content;
-      justify-content: $justify-content;
       justify-content: $justify-content;
     }
      
     @if ($align-items) {
-      -webkit-box-align: $align-items;
-      -ms-flex-align: $align-items;
-      -webkit-align-items: $align-items;
       align-items: $align-items;
     } 
 
     @if ($flex-flow) {
       flex-flow: $flex-flow;
-      -ms-flex-flow: $flex-flow;
-          flex-flow: $flex-flow;
     }
 
 }

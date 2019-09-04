@@ -1,0 +1,32 @@
+@mixin makeColumnSystem($columns, $layout, $xGap:'', $yGap:'', $breakpoint: '') {
+
+  // xyGap layout, |3%,4%|
+  $xyGapLayout: '';
+  @if ($xGap != '' and $yGap != '') {
+    $yGapLayout: '';
+    @if ($yGap != '') {
+      $yGapLayout: ',' + $yGap;
+    }
+
+    $xyGapLayout: '(' + $xGap + $yGapLayout + ')';
+  }
+
+  // breakpoints [<=tablet]
+  $breakpointLayout: '';
+  @if ($breakpoint != '') {
+    $breakpointLayout: '(' + $breakpoint + ')';
+  }
+
+  @if ($breakpoint != '') {
+    @include media($breakpoint) {
+      [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}#{$breakpointLayout}"] {
+        @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
+      }
+    }
+  } 
+  @else {
+    [class~="o-columns--#{$columns}-(#{$layout})#{$xyGapLayout}"] {
+      @include perch(#{$layout}, ('.o-columns__column': $columns), $xGap, $yGap);
+    }
+  }
+}

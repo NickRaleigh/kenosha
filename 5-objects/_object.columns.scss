@@ -1,0 +1,5 @@
+// Column mixins will be generated using grid.rb
+@include makeColumnSystem(4, '^-->', 4%, 4%, '');
+@include makeColumnSystem(3, '^-->', 5%, 5%, '<=1250px');
+@include makeColumnSystem(2, '^-->', 6%, 6%, '<=desktop');
+@include makeColumnSystem(1, '^-->', 0, "~3em", '<=tablet');
